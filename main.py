@@ -16,6 +16,7 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
+    var = 0
     rurl = f'http://panel.botclapnet.xyz/api/globalbans.php?userID={member.id}'
 
     x = requests.get(rurl)
