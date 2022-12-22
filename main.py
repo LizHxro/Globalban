@@ -1,10 +1,7 @@
 import json
 import disnake
 import requests as requests
-from disnake.ext import commands, tasks
-from disnake.ext.commands import LargeInt
-import config
-
+from disnake.ext import commands
 
 client = commands.Bot(command_prefix='.', intents=disnake.Intents.all())
 client.remove_command('help')
@@ -16,18 +13,16 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-    var = 0
     rurl = f'http://panel.botclapnet.xyz/api/globalbans.php?userID={member.id}'
 
     x = requests.get(rurl)
-
-    data = json.loads(x.text)
-    reason = data['reason']
-
+    
     if x.text == '0 results':
         pass
     else:
         try:
+            data = json.loads(x.text)
+            reason = data['reason']
             await member.ban(reason=reason)
         except:
             pass
